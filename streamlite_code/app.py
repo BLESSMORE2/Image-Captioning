@@ -18,10 +18,19 @@ def delete_existing_frames(output_frame_dir):
     existing_frames = glob.glob(os.path.join(output_frame_dir, '*.jpg'))
     for frame_file in existing_frames:
         os.remove(frame_file)
+current_directory = os.getcwd()
+print("Current working directory:", current_directory)
 
-# Load the tokenizer from the saved file
-with open('tokenizer.pickle', 'rb') as handle:
-    tokenizer = pickle.load(handle)
+# Specify the path to the tokenizer.pickle file relative to the working directory
+tokenizer_path = os.path.join(current_directory, 'tokenizer.pickle')
+
+# Check if the file exists at the specified path
+if os.path.exists(tokenizer_path):
+    with open(tokenizer_path, 'rb') as handle:
+        tokenizer = pickle.load(handle)
+else:
+    print("tokenizer.pickle file not found at the specified path:", tokenizer_path)
+
 
 # Load the caption model
 caption_model = load_model('model.h5')
