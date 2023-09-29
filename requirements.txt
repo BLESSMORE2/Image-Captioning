@@ -3,4 +3,10 @@ streamlit
 numpy
 tensorflow
 
-pencv-python
+opencv-python
+
+
+
+
+
+
