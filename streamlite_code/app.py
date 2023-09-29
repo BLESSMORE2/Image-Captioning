@@ -11,7 +11,7 @@ from tensorflow.keras.applications import DenseNet201
 from tensorflow.keras.applications.densenet import preprocess_input
 from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.models import Model
-from tqdm import tqdm
+
 
 # Function to delete existing frames
 def delete_existing_frames(output_frame_dir):
