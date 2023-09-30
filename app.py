@@ -35,14 +35,14 @@ else:
 
 
 # Specify the path to the model.h5 file relative to the working directory
-#model_path = os.path.join(current_directory, 'model.h5')
+model_path = os.path.join(current_directory, 'model.h5')
 caption_model = load_model('model.h5')
 
 # Check if the file exists at the specified path
-if os.path.exists(model_path):
-    caption_model = load_model(model_path)
-else:
-    print("model.h5 file not found at the specified path:", model_path)
+# if os.path.exists(model_path):
+#     caption_model = load_model(model_path)
+# else:
+#     print("model.h5 file not found at the specified path:", model_path)
 
 def idx_to_word(integer, tokenizer):
     for word, index in tokenizer.word_index.items():
