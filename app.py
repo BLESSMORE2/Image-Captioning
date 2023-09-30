@@ -2,6 +2,7 @@ import streamlit as st
 import cv2
 import os
 import glob
+import shutil
 import numpy as np
 import pickle
 from tensorflow.keras.models import load_model
@@ -26,21 +27,22 @@ print("Current working directory:", current_directory)
 tokenizer_path = os.path.join(current_directory, 'tokenizer.pickle')
 
 # Check if the file exists at the specified path
-if os.path.exists(tokenizer_path):
-    with open(tokenizer_path, 'rb') as handle:
-        tokenizer = pickle.load(handle)
-else:
-    print("tokenizer.pickle file not found at the specified path:", tokenizer_path)
+#if os.path.exists(tokenizer_path):
+with open(tokenizer_path, 'rb') as handle:
+    tokenizer = pickle.load(handle)
+#else:
+   # print("tokenizer.pickle file not found at the specified path:", tokenizer_path)
 
 
 # Specify the path to the model.h5 file relative to the working directory
 model_path = os.path.join(current_directory, 'model.h5')
+caption_model = load_model('model.h5', compile=False)
 
 # Check if the file exists at the specified path
-if os.path.exists(model_path):
-    caption_model = load_model(model_path)
-else:
-    print("model.h5 file not found at the specified path:", model_path)
+# if os.path.exists(model_path):
+#     caption_model = load_model(model_path)
+# else:
+#     print("model.h5 file not found at the specified path:", model_path)
 
 def idx_to_word(integer, tokenizer):
     for word, index in tokenizer.word_index.items():
@@ -80,6 +82,11 @@ def main():
 
     if video_file is not None:
         # Output frame directory
+        if not os.path.exists('frames'):
+            os.makedirs('frames')
+        else:
+            shutil.rmtree('frames')
+            os.makedirs('frames')
         output_frame_dir = "frames/"
         #output_frame_dir = Path(__file__).resolve().parents[1] / 'frames/'
 
@@ -100,7 +107,7 @@ def main():
             f.write(video_file.read())
 
         # Create a capture object
-        cap = cv2.VideoCapture(path)
+        cap = cv2.VideoCapture(video_path)
 
         frame_count = 0
 
