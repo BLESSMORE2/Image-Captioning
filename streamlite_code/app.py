@@ -79,7 +79,7 @@ def main():
 
     if video_file is not None:
         # Output frame directory
-        output_frame_dir = os.path.abspath('frames/')
+        output_frame_dir = os.path.abspath("frames/")
 
         # Frame skip factor
         frame_skip_factor = 20
