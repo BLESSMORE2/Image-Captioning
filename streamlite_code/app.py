@@ -86,12 +86,12 @@ def main():
 
         # Delete existing frames
         delete_existing_frames(output_frame_dir)
-
+        path = video_file.name
         # Convert the video_file object to a file path
         video_path = os.path.join(output_frame_dir, "uploaded_video.mp4")
         
 
-        with open(video_path, "wb") as f:
+        with open(path, "wb") as f:
             f.write(video_file.read())
 
         # Create a capture object
