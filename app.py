@@ -105,7 +105,7 @@ def main():
             f.write(video_file.read())
 
         # Create a capture object
-        cap = cv2.VideoCapture(path)
+        cap = cv2.VideoCapture(video_path)
 
         frame_count = 0
 
