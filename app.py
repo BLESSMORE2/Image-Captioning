@@ -14,7 +14,9 @@ from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.models import Model
 from pathlib import Path
 
-
+with st.sidebar:
+        st.write("DONE BY :")
+        st.write("BLESSMORE MAJONGWE R197347M")
 # Function to delete existing frames
 def delete_existing_frames(output_frame_dir):
     existing_frames = glob.glob(os.path.join(output_frame_dir, '*.jpg'))
