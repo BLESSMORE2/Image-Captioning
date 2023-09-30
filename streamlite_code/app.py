@@ -81,7 +81,7 @@ def main():
     if video_file is not None:
         # Output frame directory
         #output_frame_dir = "frames/"
-        output_frame_dir = Path(__file__).resolve().parents[1] / 'frames'
+        output_frame_dir = Path(__file__).resolve().parents[1] / 'frames/'
 
 
         # Frame skip factor
