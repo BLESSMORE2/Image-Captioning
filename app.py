@@ -80,6 +80,11 @@ def main():
 
     if video_file is not None:
         # Output frame directory
+        if not os.path.exists('frames'):
+            os.makedirs('frames')
+        else:
+            shutil.rmtree('frames')
+            os.makedirs('frames')
         output_frame_dir = "frames/"
         #output_frame_dir = Path(__file__).resolve().parents[1] / 'frames/'
 
