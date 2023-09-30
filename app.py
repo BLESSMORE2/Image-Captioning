@@ -35,7 +35,8 @@ else:
 
 
 # Specify the path to the model.h5 file relative to the working directory
-model_path = os.path.join(current_directory, 'model.h5')
+#model_path = os.path.join(current_directory, 'model.h5')
+caption_model = load_model('model.h5')
 
 # Check if the file exists at the specified path
 if os.path.exists(model_path):
