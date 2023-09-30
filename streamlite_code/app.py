@@ -11,6 +11,7 @@ from tensorflow.keras.applications import DenseNet201
 from tensorflow.keras.applications.densenet import preprocess_input
 from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.models import Model
+from pathlib import Path
 
 
 # Function to delete existing frames
@@ -79,19 +80,21 @@ def main():
 
     if video_file is not None:
         # Output frame directory
-        output_frame_dir = os.path.abspath("frames/")
+        #output_frame_dir = "frames/"
+        output_frame_dir = Path(__file__).parents[1] / 'frames'
+
 
         # Frame skip factor
         frame_skip_factor = 20
 
         # Delete existing frames
         delete_existing_frames(output_frame_dir)
-        path = video_file.name
+        
         # Convert the video_file object to a file path
         video_path = os.path.join(output_frame_dir, "uploaded_video.mp4")
         
 
-        with open(path, "wb") as f:
+        with open(video_file, "wb") as f:
             f.write(video_file.read())
 
         # Create a capture object
