@@ -86,17 +86,17 @@ def main():
 
         # Frame skip factor
         frame_skip_factor = 20
-
+        filename =inputpath+"/frame"+str(count)+".jpg"
         # Delete existing frames
         delete_existing_frames(output_frame_dir)
         
         # Convert the video_file object to a file path
-        video_path = os.path.join(output_frame_dir, "uploaded_video.mp4")
+        #video_path = os.path.join(output_frame_dir, "uploaded_video.mp4")
         #video_path = os.path.join(str(output_frame_dir), "uploaded_video.mp4")
-        video_path = output_frame_dir+/"uploaded_video.mp4"
+        video_path = output_frame_dir+"uploaded_video.mp4"
         
 
-        with open(video_file, "wb") as f:
+        with open(video_path, "wb") as f:
             f.write(video_file.read())
 
         # Create a capture object
