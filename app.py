@@ -36,7 +36,7 @@ with open(tokenizer_path, 'rb') as handle:
 
 # Specify the path to the model.h5 file relative to the working directory
 model_path = os.path.join(current_directory, 'model.h5')
-caption_model = load_model('model_path')
+caption_model = load_model('model.h5',, compile=False)
 
 # Check if the file exists at the specified path
 # if os.path.exists(model_path):
