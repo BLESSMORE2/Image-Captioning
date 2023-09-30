@@ -11,20 +11,36 @@ from tensorflow.keras.applications import DenseNet201
 from tensorflow.keras.applications.densenet import preprocess_input
 from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.models import Model
-from tqdm import tqdm
+from pathlib import Path
+
 
 # Function to delete existing frames
 def delete_existing_frames(output_frame_dir):
     existing_frames = glob.glob(os.path.join(output_frame_dir, '*.jpg'))
     for frame_file in existing_frames:
         os.remove(frame_file)
+current_directory = os.getcwd()
+print("Current working directory:", current_directory)
 
-# Load the tokenizer from the saved file
-with open('tokenizer.pickle', 'rb') as handle:
-    tokenizer = pickle.load(handle)
+# Specify the path to the tokenizer.pickle file relative to the working directory
+tokenizer_path = os.path.join(current_directory, 'tokenizer.pickle')
 
-# Load the caption model
-caption_model = load_model('model.h5')
+# Check if the file exists at the specified path
+if os.path.exists(tokenizer_path):
+    with open(tokenizer_path, 'rb') as handle:
+        tokenizer = pickle.load(handle)
+else:
+    print("tokenizer.pickle file not found at the specified path:", tokenizer_path)
+
+
+# Specify the path to the model.h5 file relative to the working directory
+model_path = os.path.join(current_directory, 'model.h5')
+
+# Check if the file exists at the specified path
+if os.path.exists(model_path):
+    caption_model = load_model(model_path)
+else:
+    print("model.h5 file not found at the specified path:", model_path)
 
 def idx_to_word(integer, tokenizer):
     for word, index in tokenizer.word_index.items():
@@ -64,21 +80,27 @@ def main():
 
     if video_file is not None:
         # Output frame directory
-        output_frame_dir = 'frames/'
+        output_frame_dir = "frames/"
+        #output_frame_dir = Path(__file__).resolve().parents[1] / 'frames/'
+
 
         # Frame skip factor
         frame_skip_factor = 20
-
+       
         # Delete existing frames
         delete_existing_frames(output_frame_dir)
-
+        # filename =inputpath+"/frame"+str(count)+".jpg"
         # Convert the video_file object to a file path
-        video_path = os.path.join(output_frame_dir, "uploaded_video.mp4")
+        #video_path = os.path.join(output_frame_dir, "uploaded_video.mp4")
+        #video_path = os.path.join(str(output_frame_dir), "uploaded_video.mp4")
+        video_path = output_frame_dir+"uploaded_video.mp4"
+        
+
         with open(video_path, "wb") as f:
             f.write(video_file.read())
 
         # Create a capture object
-        cap = cv2.VideoCapture(video_path)
+        cap = cv2.VideoCapture(path)
 
         frame_count = 0
 
