@@ -88,8 +88,8 @@ def main():
         delete_existing_frames(output_frame_dir)
 
         # Convert the video_file object to a file path
-        current_directory = os.getcwd()  # Get the current working directory
-        video_path = os.path.join(current_directory, output_frame_dir, "uploaded_video.mp4")
+        video_path = os.path.join(output_frame_dir, "uploaded_video.mp4")
+        
 
         with open(video_path, "wb") as f:
             f.write(video_file.read())
