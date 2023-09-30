@@ -79,7 +79,7 @@ def main():
 
     if video_file is not None:
         # Output frame directory
-        output_frame_dir = os.path.join(os.getcwd(), "frames")
+        output_frame_dir = 'frames/'
 
         # Frame skip factor
         frame_skip_factor = 20
@@ -88,7 +88,9 @@ def main():
         delete_existing_frames(output_frame_dir)
 
         # Convert the video_file object to a file path
-        video_path = os.path.join(output_frame_dir, "uploaded_video.mp4")
+        current_directory = os.getcwd()  # Get the current working directory
+        video_path = os.path.join(current_directory, output_frame_dir, "uploaded_video.mp4")
+
         with open(video_path, "wb") as f:
             f.write(video_file.read())
 
