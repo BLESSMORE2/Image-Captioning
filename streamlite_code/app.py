@@ -81,7 +81,7 @@ def main():
     if video_file is not None:
         # Output frame directory
         #output_frame_dir = "frames/"
-        output_frame_dir = Path(__file__).parents[1] / 'frames'
+        output_frame_dir = Path(__file__).resolve().parents[1] / 'frames'
 
 
         # Frame skip factor
@@ -91,7 +91,8 @@ def main():
         delete_existing_frames(output_frame_dir)
         
         # Convert the video_file object to a file path
-        video_path = os.path.join(output_frame_dir, "uploaded_video.mp4")
+        #video_path = os.path.join(output_frame_dir, "uploaded_video.mp4")
+        video_path = os.path.join(str(output_frame_dir), "uploaded_video.mp4")
         
 
         with open(video_file, "wb") as f:
