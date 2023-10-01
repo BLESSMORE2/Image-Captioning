@@ -41,7 +41,7 @@ with open(tokenizer_path, 'rb') as handle:
 # Specify the path to the model.h5 file relative to the working directory
 model_path = os.path.join(current_directory, 'model.h5')
 caption_model = load_model('model.h5', compile=False)
-openai.api_key = "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"
+openai.api_key = "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"
 
 
 
