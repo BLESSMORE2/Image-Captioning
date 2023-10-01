@@ -189,17 +189,24 @@ def main():
             # Generate text that describes the video from the captions
             video_description = "\n".join(video_captions.values())
 
+            # account for deprecation of LLM model
+            # Get the current date
+            current_date = datetime.datetime.now().date()
+
+            # Define the date after which the model should be set to "gpt-3.5-turbo"
+            target_date = datetime.date(2024, 6, 12)
+
+            # Set the model variable based on the current date
+            if current_date > target_date:
+                llm_model = "gpt-3.5-turbo"
+            else:
+                llm_model = "gpt-3.5-turbo-0301"
+
             # Define a prompt to generate a video description
             prompt = f"Generate a description of what is happening in the video:\n{video_description}\nDescription:"
 
             # Generate the video description using OpenAI's GPT-3
-            response = openai.Completion.create(
-                engine="text-davinci-002",  # You can choose the appropriate engine
-                prompt=prompt,
-                max_tokens=100  # Adjust this based on the desired length of the description
-            )
-
-            generated_description = response.choices[0].text
+            generated_description = get_completion(prompt, model=llm_model)
 
             # Display the generated description
             st.write("Generated Video Description:")
