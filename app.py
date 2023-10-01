@@ -204,38 +204,38 @@ def main():
                 frame = cv2.imread(os.path.join(output_frame_dir, frame_filename))
                 st.image(frame, caption=f"Frame: {frame_filename}\nCaption: {caption}", use_column_width=False)
 
-        # elif option == "Generate Video Description":
-        #     # Generate text that describes the video from the captions
-        #     video_description = "\n".join(video_captions.values())
-        #     st.write("Video Description:")
-        #     st.write(video_description)
-                
         elif option == "Generate Video Description":
             # Generate text that describes the video from the captions
             video_description = "\n".join(video_captions.values())
+            st.write("Video Description:")
+            st.write(video_description)
+                
+        # elif option == "Generate Video Description":
+        #     # Generate text that describes the video from the captions
+        #     video_description = "\n".join(video_captions.values())
 
-            # account for deprecation of LLM model
-            # Get the current date
-            current_date = datetime.datetime.now().date()
+        #     # account for deprecation of LLM model
+        #     # Get the current date
+        #     current_date = datetime.datetime.now().date()
 
-            # Define the date after which the model should be set to "gpt-3.5-turbo"
-            target_date = datetime.date(2024, 6, 12)
+        #     # Define the date after which the model should be set to "gpt-3.5-turbo"
+        #     target_date = datetime.date(2024, 6, 12)
 
-            # Set the model variable based on the current date
-            if current_date > target_date:
-                llm_model = "gpt-3.5-turbo"
-            else:
-                llm_model = "gpt-3.5-turbo-0301"
+        #     # Set the model variable based on the current date
+        #     if current_date > target_date:
+        #         llm_model = "gpt-3.5-turbo"
+        #     else:
+        #         llm_model = "gpt-3.5-turbo-0301"
 
-            # Define a prompt to generate a video description
-            prompt = f"Generate a description of what is happening in the video:\n{video_description}\nDescription:"
+        #     # Define a prompt to generate a video description
+        #     prompt = f"Generate a description of what is happening in the video:\n{video_description}\nDescription:"
 
-            # Generate the video description using OpenAI's GPT-3
-            generated_description = get_completion(prompt, model=llm_model)
+        #     # Generate the video description using OpenAI's GPT-3
+        #     generated_description = get_completion(prompt, model=llm_model)
 
-            # Display the generated description
-            st.write("Generated Video Description:")
-            st.write(generated_description)
+        #     # Display the generated description
+        #     st.write("Generated Video Description:")
+        #     st.write(generated_description)
 
 if __name__ == "__main__":
     main()
