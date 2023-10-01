@@ -42,12 +42,18 @@ with open(tokenizer_path, 'rb') as handle:
 model_path = os.path.join(current_directory, 'model.h5')
 caption_model = load_model('model.h5', compile=False)
 openai.api_key = "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"
-# Check if the file exists at the specified path
-# if os.path.exists(model_path):
-#     caption_model = load_model(model_path)
-# else:
-#     print("model.h5 file not found at the specified path:", model_path)
 
+
+
+def get_completion(prompt, model=llm_model):
+    messages = [{"role": "system", "content": "You are a helpful assistant that generates video descriptions."},
+                {"role": "user", "content": prompt}]
+    response = openai.ChatCompletion.create(
+        model=model,
+        messages=messages,
+        temperature=0,
+    )
+    return response.choices[0].message["content"]
 def idx_to_word(integer, tokenizer):
     for word, index in tokenizer.word_index.items():
         if index == integer:
