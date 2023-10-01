@@ -188,8 +188,22 @@ def main():
         elif option == "Generate Video Description":
             # Generate text that describes the video from the captions
             video_description = "\n".join(video_captions.values())
-            st.write("Video Description:")
-            st.write(video_description)
+
+            # Define a prompt to generate a video description
+            prompt = f"Generate a description of what is happening in the video:\n{video_description}\nDescription:"
+
+            # Generate the video description using OpenAI's GPT-3
+            response = openai.Completion.create(
+                engine="text-davinci-002",  # You can choose the appropriate engine
+                prompt=prompt,
+                max_tokens=100  # Adjust this based on the desired length of the description
+            )
+
+            generated_description = response.choices[0].text
+
+            # Display the generated description
+            st.write("Generated Video Description:")
+            st.write(generated_description)
 
 if __name__ == "__main__":
     main()
