@@ -1,6 +1,7 @@
 import streamlit as st
 import cv2
 import os
+import datetime
 import glob
 import shutil
 import numpy as np
@@ -13,8 +14,11 @@ from tensorflow.keras.applications.densenet import preprocess_input
 from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.models import Model
 from pathlib import Path
+import openai
 
-
+with st.sidebar:
+        st.write("DONE BY :")
+        st.write("BLESSMORE MAJONGWE R197347M")
 # Function to delete existing frames
 def delete_existing_frames(output_frame_dir):
     existing_frames = glob.glob(os.path.join(output_frame_dir, '*.jpg'))
@@ -37,13 +41,30 @@ with open(tokenizer_path, 'rb') as handle:
 # Specify the path to the model.h5 file relative to the working directory
 model_path = os.path.join(current_directory, 'model.h5')
 caption_model = load_model('model.h5', compile=False)
+openai.api_key = "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"
 
-# Check if the file exists at the specified path
-# if os.path.exists(model_path):
-#     caption_model = load_model(model_path)
-# else:
-#     print("model.h5 file not found at the specified path:", model_path)
 
+
+# Get the current date
+current_date = datetime.datetime.now().date()
+
+# Define the date after which the model should be set to "gpt-3.5-turbo"
+target_date = datetime.date(2024, 6, 12)
+# Set the model variable based on the current date
+if current_date > target_date:
+    llm_model = "gpt-3.5-turbo"
+else:
+    llm_model = "gpt-3.5-turbo-0301"
+        
+def get_completion(prompt, model=llm_model):
+    messages = [{"role": "system", "content": "You are a helpful assistant that generates video descriptions."},
+                {"role": "user", "content": prompt}]
+    response = openai.ChatCompletion.create(
+        model=model,
+        messages=messages,
+        temperature=0,
+    )
+    return response.choices[0].message["content"]
 def idx_to_word(integer, tokenizer):
     for word, index in tokenizer.word_index.items():
         if index == integer:
@@ -182,11 +203,39 @@ def main():
             for frame_filename, caption in video_captions.items():
                 frame = cv2.imread(os.path.join(output_frame_dir, frame_filename))
                 st.image(frame, caption=f"Frame: {frame_filename}\nCaption: {caption}", use_column_width=False)
+
         elif option == "Generate Video Description":
             # Generate text that describes the video from the captions
             video_description = "\n".join(video_captions.values())
             st.write("Video Description:")
             st.write(video_description)
+                
+        # elif option == "Generate Video Description":
+        #     # Generate text that describes the video from the captions
+        #     video_description = "\n".join(video_captions.values())
+
+        #     # account for deprecation of LLM model
+        #     # Get the current date
+        #     current_date = datetime.datetime.now().date()
+
+        #     # Define the date after which the model should be set to "gpt-3.5-turbo"
+        #     target_date = datetime.date(2024, 6, 12)
+
+        #     # Set the model variable based on the current date
+        #     if current_date > target_date:
+        #         llm_model = "gpt-3.5-turbo"
+        #     else:
+        #         llm_model = "gpt-3.5-turbo-0301"
+
+        #     # Define a prompt to generate a video description
+        #     prompt = f"Generate a description of what is happening in the video:\n{video_description}\nDescription:"
+
+        #     # Generate the video description using OpenAI's GPT-3
+        #     generated_description = get_completion(prompt, model=llm_model)
+
+        #     # Display the generated description
+        #     st.write("Generated Video Description:")
+        #     st.write(generated_description)
 
 if __name__ == "__main__":
     main()
